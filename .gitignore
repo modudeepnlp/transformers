@@ -138,3 +138,13 @@ serialization_dir
 
 # emacs
 *.*~
+
+# output directories
+CORPUS/
+DATA/
+MODELS/
+MODELS_TF/
+SUMMARY/
+TASK_DATA/
+TASK_RESULTS/
+
