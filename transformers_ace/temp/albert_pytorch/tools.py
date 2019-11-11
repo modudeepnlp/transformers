@@ -21,25 +21,19 @@ def print_config(config):
     return
 
 
-def init_logger(log_file=None, log_file_level=logging.NOTSET):
-    """
-    Example:
-        >>> init_logger(log_file)
-        >>> logger.info("abc'")
-    """
+def init_logger(name='', log_file=None, log_file_level=logging.DEBUG):
     if isinstance(log_file, Path):
         log_file = str(log_file)
-    # log_format = logging.Formatter("[%(asctime)s %(levelname)s] %(message)s")
-    log_format = logging.Formatter("%(message)s")
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
+
+    logger = logging.getLogger(name=name)
+    logger.setLevel(logging.DEBUG)
     console_handler = logging.StreamHandler()
-    console_handler.setFormatter(log_format)
-    logger.handlers = [console_handler]
+    console_handler.setFormatter("%(message)s")
+    logger.addHandler(console_handler)
     if log_file and log_file != '':
         file_handler = logging.FileHandler(log_file)
         file_handler.setLevel(log_file_level)
-        file_handler.setFormatter(log_format)
+        file_handler.setFormatter(logging.Formatter("[%(asctime)s %(levelname)s] %(message)s"))
         logger.addHandler(file_handler)
     return logger
 
@@ -74,7 +68,8 @@ def prepare_device(n_gpu_use):
         device_type = f"cuda:{n_gpu_use[0]}"
     n_gpu = torch.cuda.device_count()
     if len(n_gpu_use) > 0 and n_gpu == 0:
-        logger.warning("Warning: There\'s no GPU available on this machine, training will be performed on CPU.")
+        logger.warning(
+            "Warning: There\'s no GPU available on this machine, training will be performed on CPU.")
         device_type = 'cpu'
     if len(n_gpu_use) > n_gpu:
         msg = f"Warning: The number of GPU\'s configured to use is {n_gpu_use}, but only {n_gpu} are available on this machine."
@@ -281,13 +276,16 @@ def summary(model, *inputs, batch_size=-1, show_input=True):
 
             params = 0
             if hasattr(module, "weight") and hasattr(module.weight, "size"):
-                params += torch.prod(torch.LongTensor(list(module.weight.size())))
+                params += torch.prod(
+                    torch.LongTensor(list(module.weight.size())))
                 summary[m_key]["trainable"] = module.weight.requires_grad
             if hasattr(module, "bias") and hasattr(module.bias, "size"):
                 params += torch.prod(torch.LongTensor(list(module.bias.size())))
             summary[m_key]["nb_params"] = params
 
-        if (not isinstance(module, nn.Sequential) and not isinstance(module, nn.ModuleList) and not (module == model)):
+        if (not isinstance(module, nn.Sequential) and not isinstance(module,
+                                                                     nn.ModuleList) and not (
+                module == model)):
             if show_input is True:
                 hooks.append(module.register_forward_pre_hook(hook))
             else:
@@ -305,13 +303,15 @@ def summary(model, *inputs, batch_size=-1, show_input=True):
     for h in hooks:
         h.remove()
 
-    print("-----------------------------------------------------------------------")
+    print(
+        "-----------------------------------------------------------------------")
     if show_input is True:
         line_new = f"{'Layer (type)':>25}  {'Input Shape':>25} {'Param #':>15}"
     else:
         line_new = f"{'Layer (type)':>25}  {'Output Shape':>25} {'Param #':>15}"
     print(line_new)
-    print("=======================================================================")
+    print(
+        "=======================================================================")
 
     total_params = 0
     total_output = 0
@@ -342,8 +342,10 @@ def summary(model, *inputs, batch_size=-1, show_input=True):
 
         print(line_new)
 
-    print("=======================================================================")
+    print(
+        "=======================================================================")
     print(f"Total params: {total_params:0,}")
     print(f"Trainable params: {trainable_params:0,}")
     print(f"Non-trainable params: {(total_params - trainable_params):0,}")
-    print("-----------------------------------------------------------------------")
+    print(
+        "-----------------------------------------------------------------------")

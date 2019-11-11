@@ -1,5 +1,5 @@
 # Transformers by Ace
-### Easy and Pythonic Workflow on HuggingFace's Transformers
+### Easy and Pythonic Workflow based on HuggingFace's Transformers
 forked from [huggingface/transformers](https://github.com/huggingface/transformers)
 
 ## Install For User (TODO)
@@ -18,17 +18,17 @@ echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
 ```
 
-Install python
+Install python and create a virtual environment
 ```
 pyenv install 3.7.3
 pyenv virtualenv 3.7.3 transformers
 ```
 
-Clone and Create a virtual environment for transformers-ace (main branch: `ace`)
+Clone transformers-ace (main branch: `ace`)
 ```
 git clone https://github.com/modudeepnlp/transformers-ace.git
 cd transformers-ace
-git remote add upstream https://github.com/huggingface/transformersㄴ
+git remote add upstream https://github.com/huggingface/transformers
 pyenv local transformers
 ```
 
@@ -68,22 +68,23 @@ MODELS/ & TASK_DATA/ -> finetune & inference -> TASK_RESULTS/ -> compare -> SUMM
 ### Preparing
 albert with word-piece-tokenizer
 ```
-python -m transformers_ace.albert.prepare --config=word-piece-10000-ko-wiki.json --corpus_dir=~/CORPUS/ko-wiki --data_dir=~/DATA/ko-wiki/wpt
+python -m transformers_ace.albert.albert_prepare --config_file=configs/kowiki-wordpiece-10000.json 
 ```
 
 ### Pretraining
 ablert with base-uncased
 ```
-python -m transformers_ace.albert.pretrain --config=albert-base-uncased-config.json --data_dir=~/DATA/ko-wiki/wpt --model_dir=~/MODEL/albert-base-uncased
+python -m transformers_ace.albert.albert_pretrain --config_file=configs/albert-base-uncased-config.json --data_dir=~/DATA/ko-wiki/wpt --model_dir=~/MODEL/albert-base-uncased
 ```
 
 ### Finetunning
-CoLA task with albert
+KorQuad task with albert
 ```
-python -m transformers_ace.albert.run_korquad.py --config=korquad_v1.json --model_dir=~/MODEL/bert-base-uncased --result=RESULTS/bert-base-uncased.csv --do_train --do_eval
+python -m transformers_ace.albert.albert_korquad.py --config_file=configs/korquad_v1.json --model_dir=~/MODEL/bert-base-uncased --result=RESULTS/bert-base-uncased.csv --do_train --do_eval
 ```
 
-## Crawling (If you need)
-```
-python -m transformers_ace.crawlers.ko_wiki_crawler --config=ko-wiki-sample.json --corpus_dir=~/CORPUS/ko-wiki
-```
+### Crawling (If you need)
+see: [paul-hyun/web-crawler](https://github.com/paul-hyun/web-crawler)
+
+## Configuration for Python IDE
+[Pycharm Coding Style like huggingface](https://github.com/modudeepnlp/transformers-ace/blob/ace/transformers_ace/etc/huggingface.xml)

@@ -65,7 +65,7 @@ class AlbertTokenizer(PreTrainedTokenizer):
     pretrained_vocab_files_map = PRETRAINED_VOCAB_FILES_MAP
     max_model_input_sizes = PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES
 
-    def __init__(self, vocab_file,
+    def __init__(self, vocab_file, model_file,
                  do_lower_case=True, remove_space=True, keep_accents=False,
                  bos_token="[CLS]", eos_token="[SEP]", unk_token="<unk>",
                  sep_token="[SEP]",
@@ -93,9 +93,10 @@ class AlbertTokenizer(PreTrainedTokenizer):
         self.remove_space = remove_space
         self.keep_accents = keep_accents
         self.vocab_file = vocab_file
+        self.model_file = model_file
 
         self.sp_model = spm.SentencePieceProcessor()
-        self.sp_model.Load(vocab_file)
+        self.sp_model.Load(model_file)
 
     @property
     def vocab_size(self):

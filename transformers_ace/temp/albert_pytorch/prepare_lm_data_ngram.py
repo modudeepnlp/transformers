@@ -250,7 +250,6 @@ def main():
     parser = ArgumentParser()
     parser.add_argument('--data_name', default='albert', type=str)
     parser.add_argument("--do_data", default=True, action='store_true')
-    parser.add_argument("--do_split", default=False, action='store_true')
     parser.add_argument("--do_lower_case", default=False, action='store_true')
     parser.add_argument('--seed', default=42, type=int)
     parser.add_argument("--line_per_file", default=1000000000, type=int)
@@ -270,20 +269,8 @@ def main():
     # tokenizer = BertTokenizer(vocab_file=config['data_dir'] / 'bert-base-uncased-vocab.txt', do_lower_case=args.do_lower_case)
     tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
-    if args.do_split:
-        corpus_path = config['data_dir'] / "corpus/100970__ties-to-the-blood-moon.txt"
-        split_save_path = config['data_dir'] / "corpus/splitted"
-        if not split_save_path.exists():
-            split_save_path.mkdir(exist_ok=True)
-        line_per_file = args.line_per_file
-        if platform.system() == 'Darwin':  # OSX
-            command = f'split -a 4 -l {line_per_file} {corpus_path} {split_save_path}/shard_'
-        else:  # Linux
-            command = f'split -a 4 -l {line_per_file} -d {corpus_path} {split_save_path}/shard_'
-        os.system(f"{command}")
-
     if args.do_data:
-        data_path = config['data_dir'] / "corpus/splitted" if args.do_split else config['data_dir'] / "corpus"
+        data_path = config['data_dir'] / "corpus"
         output_path = config['data_dir'] / "train"
         files = sorted([f for f in data_path.iterdir() if os.path.isfile(f)])
 
