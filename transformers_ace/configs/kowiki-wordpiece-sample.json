@@ -1,0 +1,19 @@
+{
+  "seed": 1,
+  "corpus_dir": "CORPUS_SAMPLE/kowiki",
+  "model_prefix": "MODELS/kowiki/kowiki-wordpiece-sample",
+  "data_dir": "DATA/ko-wiki/kowiki-wordpiece-sample/",
+  "vocab_size": 2000,
+  "character_coverage": 1.0,
+  "model_type": "bpe",
+  "do_lower_case": true,
+  "remove_space": true,
+  "keep_accents": false,
+  "bos_token": "[CLS]",
+  "eos_token": "[SEP]",
+  "unk_token": "<unk>",
+  "sep_token": "[SEP]",
+  "pad_token": "<pad>",
+  "cls_token": "[CLS]",
+  "mask_token": "[MASK]"
+}
