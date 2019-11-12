@@ -1,4 +1,7 @@
-<code_scheme name="Project" version="173">
+<code_scheme name="huggingface" version="173">
   <option name="RIGHT_MARGIN" value="150" />
   <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="true" />
+  <MarkdownNavigatorCodeStyleSettings>
+    <option name="RIGHT_MARGIN" value="-1" />
+  </MarkdownNavigatorCodeStyleSettings>
 </code_scheme>
