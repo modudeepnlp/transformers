@@ -4,7 +4,7 @@ import json
 from transformers_ace.utils.dict2object import Dict2Object
 
 
-class ConfigUtil(object):
+class JsonUtil(object):
     @classmethod
     def from_json_file(cls, json_file):
         """Constructs a `BertConfig` from a json file of parameters."""
@@ -34,5 +34,5 @@ class ConfigUtil(object):
 
 
 if __name__ == '__main__':
-    config = ConfigUtil.from_json_file('../configs/kowiki-wordpiece-10000.json')
+    config = JsonUtil.from_json_file('../configs/prepare/kowiki-wordpiece-sample.json')
     print(config)

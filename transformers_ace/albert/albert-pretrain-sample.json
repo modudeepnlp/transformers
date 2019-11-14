@@ -1,0 +1,16 @@
+{
+  "seed": 1,
+  "gpu_no": -1,
+  "share_type": "all",
+  "epochs": 100,
+  "samples_per_epoch": 1,
+  "eval_steps": 100,
+  "save_steps": 200,
+  "gradient_accumulation_steps": 1,
+  "batch_size": 1,
+  "warmup_proportion": 0.1,
+  "adam_epsilon": 1e-8,
+  "grad_norm": 1.0,
+  "learning_rate": 0.001,
+  "fp16_opt_level": null
+}

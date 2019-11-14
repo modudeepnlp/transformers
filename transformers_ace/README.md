@@ -40,10 +40,8 @@ pip install -r transformers_ace/requirements-dev.txt
 
 ## Overview
 ### Data Flow
-``` 
-crawl -> CORPUS/ -> prepare -> DATA/train,valid,vocab -> pretrain -> MODELS/
-MODELS/ & TASK_DATA/ -> finetune & inference -> TASK_RESULTS/ -> compare -> SUMMARY/
-```
+`crawl` -> CORPUS/sample.csv -> `prepare` -> DATA/sample.txt, tokenizer.model, tokenizer.vocab -> `pretrain` -> MODELS/ 
+MODELS/ & TASK_DATA/ -> `finetune` -> TASK_RESULTS/ -> `compare` -> SUMMARY/
 
 ### Packages in _transformers_ace_
 - `albert`: ALBERT model
@@ -52,10 +50,11 @@ MODELS/ & TASK_DATA/ -> finetune & inference -> TASK_RESULTS/ -> compare -> SUMM
      data for pretraining and tasks from google drive or etc.
 - `utils`: utils, downloaders
     - `downloaders`: download corpus, tokenizers, pretrained models,
-
+- `etc`: IDE config
 
 ### Directories
 - `CORPUS/`: crawled text data (gs separated format)
+    - `CORPUS_SAMPLE/`: sample data
 - `DATA/`: input data for pretraining (format for each model)
 - `TASK_DATA/`: input data for tasks (format for each task)
 - `MODELS/`: model files for pytorch
@@ -66,25 +65,29 @@ MODELS/ & TASK_DATA/ -> finetune & inference -> TASK_RESULTS/ -> compare -> SUMM
  
 ## Instructions
 ### Preparing
-albert with word-piece-tokenizer
+Create pretraining data WordPiece Tokenizer ([sentencepiece](https://github.com/google/sentencepiece))
 ```
-python -m transformers_ace.albert.albert_prepare --config_file=configs/kowiki-wordpiece-sample.json
+python -m transformers_ace.albert.albert_prepare \
+    --prepare_config_file=prepare/kowiki-wordpiece-sample.json
 ```
 
 ### Pretraining
-ablert with base-uncased
+Pretrain ALBERT with base-uncased
 ```
-python -m transformers_ace.albert.albert_pretrain --config_file=configs/albert-base-uncased-config.json --data_dir=~/DATA/ko-wiki/wpt --model_dir=~/MODEL/albert-base-uncased
+python -m transformers_ace.albert.albert_pretrain \
+    --pretrain_config_file=albert/albert-pretrain-sample.json  \ 
+    --model_config_file=albert/albert-base-config.json \
+    --prepare_config_file=prepare/kowiki-wordpiece-sample.json
 ```
 
 ### Finetunning
-KorQuad task with albert
+Finetune KorQuad task with ALBERT
 ```
-python -m transformers_ace.albert.albert_korquad.py --config_file=configs/korquad_v1.json --model_dir=~/MODEL/bert-base-uncased --result=RESULTS/bert-base-uncased.csv --do_train --do_eval
+python -m transformers_ace.albert.albert_korquad.py --config_file=configs/finetune/albert-kowiki-wordpiece-sample-korquad1.json
 ```
 
 ## Crawling Corpus
-see: [paul-hyun/web-crawler](https://github.com/paul-hyun/web-crawler)
+[paul-hyun/web-crawler](https://github.com/paul-hyun/web-crawler)
 
 ## Configuration for Python IDEs.
 [Pycharm Coding Style like huggingface](https://github.com/modudeepnlp/transformers-ace/blob/ace/transformers_ace/etc/huggingface.xml)
