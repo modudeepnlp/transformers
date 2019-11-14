@@ -18,17 +18,16 @@ echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
 ```
 
-Install python and create a virtual environment
+Install python and create a virtual environment.
 ```
 pyenv install 3.7.3
 pyenv virtualenv 3.7.3 transformers
 ```
 
-Clone transformers-ace (main branch: `ace`)
+Clone this repository.
 ```
 git clone https://github.com/modudeepnlp/transformers-ace.git
 cd transformers-ace
-git remote add upstream https://github.com/huggingface/transformers
 pyenv local transformers
 ```
 
@@ -47,9 +46,10 @@ MODELS/ & TASK_DATA/ -> finetune & inference -> TASK_RESULTS/ -> compare -> SUMM
 ```
 
 ### Packages in _transformers_ace_
-- `configs`: configs for crawlers, downloaders, pretraining, finetunning
+- `albert`: ALBERT model
+- `common`: global config and common classes
+- `configs`: configs for downloaders, pretraining, finetunning
      data for pretraining and tasks from google drive or etc.
-- `crawlers`: crawl and save raw text files into `CORPUS/`
 - `utils`: utils, downloaders
     - `downloaders`: download corpus, tokenizers, pretrained models,
 
@@ -68,7 +68,7 @@ MODELS/ & TASK_DATA/ -> finetune & inference -> TASK_RESULTS/ -> compare -> SUMM
 ### Preparing
 albert with word-piece-tokenizer
 ```
-python -m transformers_ace.albert.albert_prepare --config_file=configs/kowiki-wordpiece-10000.json 
+python -m transformers_ace.albert.albert_prepare --config_file=configs/kowiki-wordpiece-sample.json
 ```
 
 ### Pretraining
@@ -83,8 +83,11 @@ KorQuad task with albert
 python -m transformers_ace.albert.albert_korquad.py --config_file=configs/korquad_v1.json --model_dir=~/MODEL/bert-base-uncased --result=RESULTS/bert-base-uncased.csv --do_train --do_eval
 ```
 
-### Crawling (If you need)
+## Crawling Corpus
 see: [paul-hyun/web-crawler](https://github.com/paul-hyun/web-crawler)
 
-## Configuration for Python IDE
+## Configuration for Python IDEs.
 [Pycharm Coding Style like huggingface](https://github.com/modudeepnlp/transformers-ace/blob/ace/transformers_ace/etc/huggingface.xml)
+```
+Pycharm > Preference > Edit > Code Style > Import Schema > To: "huggingface"
+```
