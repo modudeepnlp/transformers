@@ -125,7 +125,7 @@ dmypy.json
 tensorflow_code
 
 # Models
-transformers_ace/MODELS
+models
 proc_data
 
 # examples
@@ -138,6 +138,7 @@ serialization_dir
 
 # emacs
 *.*~
+debug.env
 
 # output directories
 transformers_ace/CORPUS/
@@ -147,4 +148,3 @@ transformers_ace/MODELS_TF/
 transformers_ace/SUMMARY/
 transformers_ace/TASK_DATA/
 transformers_ace/TASK_RESULTS/
-
