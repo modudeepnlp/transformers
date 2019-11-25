@@ -3,7 +3,7 @@
 
 Based on the script [`run_squad.py`](https://github.com/huggingface/transformers/blob/master/examples/run_squad.py).
 
-#### Fine-tuning on Koquad
+#### Fine-tuning on Korquad
 
 The data for korquad can be downloaded with the following links and should be saved in a 
 'configs' directory.
@@ -32,7 +32,30 @@ python run_squad.py \
 Training with the previously defined hyper-parameters yields the following results:
 
 ```bash
-Results: {'exact': 18.80845167994458, 
-    'f1': 35.42493818385771, 
-    'total': 5774}
+Results: {'exact': 18.80845167994458, 'f1': 35.42493818385771, 'total': 5774}
+```
+  
+  
+Using bert-base-multilingual-cased
+
+```bash
+python run_squad.py \
+  --model_type bert \
+  --model_name_or_path bert-base-multilingual-cased \
+  --do_train \
+  --do_eval \
+  --do_lower_case \
+  --train_file ../configs/KorQuAD_v1.0_train.json \
+  --predict_file ../configs/KorQuAD_v1.0_dev.json \
+  --per_gpu_train_batch_size 12 \
+  --learning_rate 3e-5 \
+  --num_train_epochs 2.0 \
+  --max_seq_length 384 \
+  --doc_stride 128 \
+  --output_dir result/bert-multilingual-cased/
+```
+Training with the previously defined hyper-parameters yields the following results:
+
+```bash
+Results: {'exact': 1.4547973675095254, 'f1': 4.096032592685539, 'total': 5774}
 ```

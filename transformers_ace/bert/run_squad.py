@@ -44,6 +44,7 @@ from transformers import (WEIGHTS_NAME, BertConfig,
                                   XLNetForQuestionAnswering,
                                   XLNetTokenizer,
                                   DistilBertConfig, DistilBertForQuestionAnswering, DistilBertTokenizer)
+import KoBertForQuestionAnswering
 
 from transformers import AdamW, WarmupLinearSchedule
 
