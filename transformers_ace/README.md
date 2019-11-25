@@ -46,6 +46,8 @@ MODELS/ & TASK_DATA/ -> finetune & inference -> TASK_RESULTS/ -> compare -> SUMM
 ```
 
 ### Packages in _transformers_ace_
+- `bert` : BERT model
+- `kobert` : KoBERT model
 - `albert`: ALBERT model
 - `common`: global config and common classes
 - `configs`: configs for downloaders, pretraining, finetunning
